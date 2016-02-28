@@ -176,7 +176,9 @@ while True:
  
         PANTALLA.blit(nave, (posicion_x_nave, posicion_y_nave))
         PANTALLA.blit(enemigo_1_1, (posicion_x_enemigo_1_1a_fila, posicion_y_enemigo_1_1a_fila))
-        
+
+#cambio
+
         for event in pygame.event.get():
             if event.type == QUIT:
                 pygame.quit()
