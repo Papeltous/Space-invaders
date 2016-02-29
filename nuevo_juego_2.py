@@ -35,6 +35,8 @@ def Dibujar_Texto(texto, fuente, superficie, x, y):
 #Creacion de variables
 #--------------------------------------------------------------------------------------------
 
+izquierda = False
+
 movimiento_izquierda = False
 movimiento_derecha = False
 
@@ -133,7 +135,17 @@ posicion_x_enemigo_10_4a_fila = pantalla_x / 12 * 10
 posicion_x_enemigo_11_4a_fila = pantalla_x / 12 * 11
 
 
-posicion_y_enemigo_1_4a_fila = posicion_y_enemigo_2_4a_fila = posicion_y_enemigo_3_4a_fila = posicion_y_enemigo_4_4a_fila = posicion_y_enemigo_5_4a_fila = posicion_y_enemigo_6_4a_fila = posicion_y_enemigo_7_4a_fila = posicion_y_enemigo_8_4a_fila = posicion_y_enemigo_9_4a_fila = posicion_y_enemigo_10_4a_fila =posicion_y_enemigo_11_4a_fila = 80
+posicion_y_enemigo_1_4a_fila = 80
+posicion_y_enemigo_2_4a_fila = 80
+posicion_y_enemigo_3_4a_fila = 80
+posicion_y_enemigo_4_4a_fila = 80
+posicion_y_enemigo_5_4a_fila = 80
+posicion_y_enemigo_6_4a_fila = 80
+posicion_y_enemigo_7_4a_fila = 80
+posicion_y_enemigo_8_4a_fila = 80
+posicion_y_enemigo_9_4a_fila = 80
+posicion_y_enemigo_10_4a_fila = 80
+posicion_y_enemigo_11_4a_fila = 80
 
 #----------------------------------------------
 
@@ -152,7 +164,17 @@ posicion_x_enemigo_9_5a_fila = pantalla_x / 12 * 9
 posicion_x_enemigo_10_5a_fila = pantalla_x / 12 * 10
 posicion_x_enemigo_11_5a_fila = pantalla_x / 12 * 11
 
-posicion_y_enemigo_1_5a_fila = posicion_y_enemigo_2_5a_fila = posicion_y_enemigo_3_5a_fila = posicion_y_enemigo_4_5a_fila = posicion_y_enemigo_5_5a_fila = posicion_y_enemigo_6_5a_fila = posicion_y_enemigo_7_5a_fila = posicion_y_enemigo_8_5a_fila = posicion_y_enemigo_9_5a_fila = posicion_y_enemigo_10_5a_fila = posicion_y_enemigo_11_5a_fila = 100
+posicion_y_enemigo_1_5a_fila = 100
+posicion_y_enemigo_2_5a_fila = 100
+posicion_y_enemigo_3_5a_fila = 100
+posicion_y_enemigo_4_5a_fila = 100
+posicion_y_enemigo_5_5a_fila = 100
+posicion_y_enemigo_6_5a_fila = 100
+posicion_y_enemigo_7_5a_fila = 100
+posicion_y_enemigo_8_5a_fila = 100
+posicion_y_enemigo_9_5a_fila = 100
+posicion_y_enemigo_10_5a_fila = 100
+posicion_y_enemigo_11_5a_fila = 100
 
 #----------------------------------------------
 posicion_x_nave = pantalla_x / 2
@@ -177,7 +199,19 @@ while True:
         PANTALLA.blit(nave, (posicion_x_nave, posicion_y_nave))
         PANTALLA.blit(enemigo_1_1, (posicion_x_enemigo_1_1a_fila, posicion_y_enemigo_1_1a_fila))
 
-#cambio
+        if posicion_x_enemigo_1_1a_fila == 20:
+            izquierda = True
+
+        if posicion_x_enemigo_1_1a_fila == pantalla_x - 20:
+            izquierda = False
+
+        if izquierda == True:
+            posicion_x_enemigo_1_1a_fila = posicion_x_enemigo_1_1a_fila + 1
+
+        if izquierda == False:
+            posicion_x_enemigo_1_1a_fila = posicion_x_enemigo_1_1a_fila - 1
+
+        print (posicion_x_enemigo_1_1a_fila)
 
         for event in pygame.event.get():
             if event.type == QUIT:
