@@ -2,254 +2,287 @@ import pygame, sys
 from pygame.locals import *
 
 pygame.init()
-pygame.display.set_caption('pantalla de prueva')
+pygame.display.set_caption('ventana de prueva')
 
-COLORDEPANTALLA = (0, 0, 0)
-COLORDETEXTO = (255, 255, 255)
+windowcolor = (0, 0, 0)
+TEXTCOLOR = (255, 255, 255)
 
-#Creación de "sprites"
+#sprites creation
 #--------------------------------------------------------------------------------------------
 
-nave = pygame.image.load('nave.png')
-enemigo_1_1 = pygame.image.load('enemigo1.png')
-enemigo_1_2 = pygame.image.load('enemigo1_2.png')
-enemigo_2 = pygame.image.load('enemigo.png')
-enemigo_2_2 = pygame.image.load('enemigo2_2.png')
-enemigo_3 = pygame.image.load('enemigo3.png')
-enemigo_3_2 = pygame.image.load('enemigo3_1.png')
-jefe_final = pygame.image.load('enemigo_final.png')
-
-#--------------------------------------------------------------------------------------------
-
-#creacion de defs
-#--------------------------------------------------------------------------------------------
-
-def Dibujar_Texto(texto, fuente, superficie, x, y):
-    objtexto = fuente.render(texto, 1, COLORDETEXTO)
-    rectexto = objtexto.get_rect()
-    rectexto.topleft = (x, y)
-    superficie.blit(objtexto, rectexto)
+munition = pygame.image.load('munition.png')
+spaceship = pygame.image.load('spaceship.png')
+enemy_1_1 = pygame.image.load('enemy1.png')
+enemy_1_2 = pygame.image.load('enemy1_2.png')
+enemy_2 = pygame.image.load('enemy.png')
+enemy_2_2 = pygame.image.load('enemy2_2.png')
+enemy_3 = pygame.image.load('enemy3.png')
+enemy_3_2 = pygame.image.load('enemy3_1.png')
+jefe_final = pygame.image.load('random_enemy.png')
 
 #--------------------------------------------------------------------------------------------
 
-#Creacion de variables
+#funcions creation
 #--------------------------------------------------------------------------------------------
 
-izquierda = False
+def Dibujar_Text(text, font, superficie, x, y):
+    objtext = font.render(text, 1, TEXT)
+    rectext = objtext.get_rect()
+    rectext.topleft = (x, y)
+    superficie.blit(objtext, rectext)
 
-movimiento_izquierda = False
-movimiento_derecha = False
+#--------------------------------------------------------------------------------------------
 
-pantalla_x = 600
-pantalla_y = 400
+#variables' creation
+#--------------------------------------------------------------------------------------------
 
-#enemigos primera fila
+left = False
+
+munition_on = False
+
+movement_left = False
+movement_right = False
+
+window_x = 600
+window_y = 400
+
+#enemys first row
 #---------------------------------------------
 
-posicion_x_enemigo_1_1a_fila = pantalla_x / 12
-posicion_x_enemigo_2_1a_fila = pantalla_x / 12 * 2
-posicion_x_enemigo_3_1a_fila = pantalla_x / 12 * 3
-posicion_x_enemigo_4_1a_fila = pantalla_x / 12 * 4
-posicion_x_enemigo_5_1a_fila = pantalla_x / 12 * 5
-posicion_x_enemigo_6_1a_fila = pantalla_x / 12 * 6
-posicion_x_enemigo_7_1a_fila = pantalla_x / 12 * 7
-posicion_x_enemigo_8_1a_fila = pantalla_x / 12 * 8
-posicion_x_enemigo_9_1a_fila = pantalla_x / 12 * 9
-posicion_x_enemigo_10_1a_fila = pantalla_x / 12 * 10
-posicion_x_enemigo_11_1a_fila = pantalla_x / 12 * 11
+position_x_enemy_1_1a_row = window_x / 12
+position_x_enemy_2_1a_row = window_x / 12 * 2
+position_x_enemy_3_1a_row = window_x / 12 * 3
+position_x_enemy_4_1a_row = window_x / 12 * 4
+position_x_enemy_5_1a_row = window_x / 12 * 5
+position_x_enemy_6_1a_row = window_x / 12 * 6
+position_x_enemy_7_1a_row = window_x / 12 * 7
+position_x_enemy_8_1a_row = window_x / 12 * 8
+position_x_enemy_9_1a_row = window_x / 12 * 9
+position_x_enemy_10_1a_row = window_x / 12 * 10
+position_x_enemy_11_1a_row = window_x / 12 * 11
 
-posicion_y_enemigo_1_1a_fila = 20
-posicion_y_enemigo_2_1a_fila = 20
-posicion_y_enemigo_3_1a_fila = 20
-posicion_y_enemigo_4_1a_fila = 20
-posicion_y_enemigo_5_1a_fila = 20
-posicion_y_enemigo_6_1a_fila = 20
-posicion_y_enemigo_7_1a_fila = 20
-posicion_y_enemigo_8_1a_fila = 20
-posicion_y_enemigo_9_1a_fila = 20
-posicion_y_enemigo_10_1a_fila = 20
-posicion_y_enemigo_11_1a_fila = 20
-
-#----------------------------------------------
-
-#enemigos segunda fila
-#----------------------------------------------
-posicion_x_enemigo_1_2a_fila = pantalla_x / 12
-posicion_x_enemigo_2_2a_fila = pantalla_x / 12 * 2
-posicion_x_enemigo_3_2a_fila = pantalla_x / 12 * 3
-posicion_x_enemigo_4_2a_fila = pantalla_x / 12 * 4
-posicion_x_enemigo_5_2a_fila = pantalla_x / 12 * 5
-posicion_x_enemigo_6_2a_fila = pantalla_x / 12 * 6
-posicion_x_enemigo_7_2a_fila = pantalla_x / 12 * 7
-posicion_x_enemigo_8_2a_fila = pantalla_x / 12 * 8
-posicion_x_enemigo_9_2a_fila = pantalla_x / 12 * 9
-posicion_x_enemigo_10_2a_fila = pantalla_x / 12 * 10
-posicion_x_enemigo_11_2a_fila = pantalla_x / 12 * 11
-
-posicion_y_enemigo_1_2a_fila = posicion_y_enemigo_2_2a_fila = posicion_y_enemigo_3_2a_fila = posicion_y_enemigo_4_2a_fila = posicion_y_enemigo_5_2a_fila = posicion_y_enemigo_6_2a_fila = posicion_y_enemigo_7_2a_fila = posicion_y_enemigo_8_2a_fila = posicion_y_enemigo_9_2a_fila = posicion_y_enemigo_10_2a_fila =posicion_y_enemigo_11_2a_fila = 40
+position_y_enemy_1_1a_row = 20
+position_y_enemy_2_1a_row = 20
+position_y_enemy_3_1a_row = 20
+position_y_enemy_4_1a_row = 20
+position_y_enemy_5_1a_row = 20
+position_y_enemy_6_1a_row = 20
+position_y_enemy_7_1a_row = 20
+position_y_enemy_8_1a_row = 20
+position_y_enemy_9_1a_row = 20
+position_y_enemy_10_1a_row = 20
+position_y_enemy_11_1a_row = 20
 
 #----------------------------------------------
 
-#enemigos tercera fila
+#enemys second row
 #----------------------------------------------
-posicion_x_enemigo_1_3a_fila = pantalla_x / 12
-posicion_x_enemigo_2_3a_fila = pantalla_x / 12 * 2
-posicion_x_enemigo_3_3a_fila = pantalla_x / 12 * 3
-posicion_x_enemigo_4_3a_fila = pantalla_x / 12 * 4
-posicion_x_enemigo_5_3a_fila = pantalla_x / 12 * 5
-posicion_x_enemigo_6_3a_fila = pantalla_x / 12 * 6
-posicion_x_enemigo_7_3a_fila = pantalla_x / 12 * 7
-posicion_x_enemigo_8_3a_fila = pantalla_x / 12 * 8
-posicion_x_enemigo_9_3a_fila = pantalla_x / 12 * 9
-posicion_x_enemigo_10_3a_fila = pantalla_x / 12 * 10
-posicion_x_enemigo_11_3a_fila = pantalla_x / 12 * 11
+position_x_enemy_1_2a_row = window_x / 12
+position_x_enemy_2_2a_row = window_x / 12 * 2
+position_x_enemy_3_2a_row = window_x / 12 * 3
+position_x_enemy_4_2a_row = window_x / 12 * 4
+position_x_enemy_5_2a_row = window_x / 12 * 5
+position_x_enemy_6_2a_row = window_x / 12 * 6
+position_x_enemy_7_2a_row = window_x / 12 * 7
+position_x_enemy_8_2a_row = window_x / 12 * 8
+position_x_enemy_9_2a_row = window_x / 12 * 9
+position_x_enemy_10_2a_row = window_x / 12 * 10
+position_x_enemy_11_2a_row = window_x / 12 * 11
 
-posicion_y_enemigo_1_3a_fila = 60
-posicion_y_enemigo_2_3a_fila = 60
-posicion_y_enemigo_3_3a_fila = 60
-posicion_y_enemigo_4_3a_fila = 60
-posicion_y_enemigo_5_3a_fila = 60
-posicion_y_enemigo_6_3a_fila = 60
-posicion_y_enemigo_7_3a_fila = 60
-posicion_y_enemigo_8_3a_fila = 60
-posicion_y_enemigo_9_3a_fila = 60
-posicion_y_enemigo_10_3a_fila = 60
-posicion_y_enemigo_11_3a_fila = 60
-
-
-#----------------------------------------------
-
-#enemigos cuarta fila
-#----------------------------------------------
-
-posicion_x_enemigo_1_4a_fila = pantalla_x / 12
-posicion_x_enemigo_2_4a_fila = pantalla_x / 12 * 2
-posicion_x_enemigo_3_4a_fila = pantalla_x / 12 * 3
-posicion_x_enemigo_4_4a_fila = pantalla_x / 12 * 4
-posicion_x_enemigo_4_4a_fila = pantalla_x / 12 * 5
-posicion_x_enemigo_6_4a_fila = pantalla_x / 12 * 6
-posicion_x_enemigo_7_4a_fila = pantalla_x / 12 * 7
-posicion_x_enemigo_8_4a_fila = pantalla_x / 12 * 8
-posicion_x_enemigo_9_4a_fila = pantalla_x / 12 * 9
-posicion_x_enemigo_10_4a_fila = pantalla_x / 12 * 10
-posicion_x_enemigo_11_4a_fila = pantalla_x / 12 * 11
-
-
-posicion_y_enemigo_1_4a_fila = 80
-posicion_y_enemigo_2_4a_fila = 80
-posicion_y_enemigo_3_4a_fila = 80
-posicion_y_enemigo_4_4a_fila = 80
-posicion_y_enemigo_5_4a_fila = 80
-posicion_y_enemigo_6_4a_fila = 80
-posicion_y_enemigo_7_4a_fila = 80
-posicion_y_enemigo_8_4a_fila = 80
-posicion_y_enemigo_9_4a_fila = 80
-posicion_y_enemigo_10_4a_fila = 80
-posicion_y_enemigo_11_4a_fila = 80
+position_y_enemy_1_2a_row = 40
+position_y_enemy_2_2a_row = 40
+position_y_enemy_3_2a_row = 40
+position_y_enemy_4_2a_row = 40
+position_y_enemy_5_2a_row = 40
+position_y_enemy_6_2a_row = 40
+position_y_enemy_7_2a_row = 40
+position_y_enemy_8_2a_row = 40
+position_y_enemy_9_2a_row = 40
+position_y_enemy_10_2a_row = 40
+position_y_enemy_11_2a_row = 40
 
 #----------------------------------------------
 
-#enemigos quinta fila
+#enemys third row
+#----------------------------------------------
+position_x_enemy_1_3a_row = window_x / 12
+position_x_enemy_2_3a_row = window_x / 12 * 2
+position_x_enemy_3_3a_row = window_x / 12 * 3
+position_x_enemy_4_3a_row = window_x / 12 * 4
+position_x_enemy_5_3a_row = window_x / 12 * 5
+position_x_enemy_6_3a_row = window_x / 12 * 6
+position_x_enemy_7_3a_row = window_x / 12 * 7
+position_x_enemy_8_3a_row = window_x / 12 * 8
+position_x_enemy_9_3a_row = window_x / 12 * 9
+position_x_enemy_10_3a_row = window_x / 12 * 10
+position_x_enemy_11_3a_row = window_x / 12 * 11
+
+position_y_enemy_1_3a_row = 60
+position_y_enemy_2_3a_row = 60
+position_y_enemy_3_3a_row = 60
+position_y_enemy_4_3a_row = 60
+position_y_enemy_5_3a_row = 60
+position_y_enemy_6_3a_row = 60
+position_y_enemy_7_3a_row = 60
+position_y_enemy_8_3a_row = 60
+position_y_enemy_9_3a_row = 60
+position_y_enemy_10_3a_row = 60
+position_y_enemy_11_3a_row = 60
+
+
 #----------------------------------------------
 
-posicion_x_enemigo_1_5a_fila = pantalla_x / 12
-posicion_x_enemigo_2_5a_fila = pantalla_x / 12 * 2
-posicion_x_enemigo_3_5a_fila = pantalla_x / 12 * 3
-posicion_x_enemigo_4_5a_fila = pantalla_x / 12 * 4
-posicion_x_enemigo_5_5a_fila = pantalla_x / 12 * 5
-posicion_x_enemigo_6_5a_fila = pantalla_x / 12 * 6
-posicion_x_enemigo_7_5a_fila = pantalla_x / 12 * 7
-posicion_x_enemigo_8_5a_fila = pantalla_x / 12 * 8
-posicion_x_enemigo_9_5a_fila = pantalla_x / 12 * 9
-posicion_x_enemigo_10_5a_fila = pantalla_x / 12 * 10
-posicion_x_enemigo_11_5a_fila = pantalla_x / 12 * 11
+#enemys fourth row
+#----------------------------------------------
 
-posicion_y_enemigo_1_5a_fila = 100
-posicion_y_enemigo_2_5a_fila = 100
-posicion_y_enemigo_3_5a_fila = 100
-posicion_y_enemigo_4_5a_fila = 100
-posicion_y_enemigo_5_5a_fila = 100
-posicion_y_enemigo_6_5a_fila = 100
-posicion_y_enemigo_7_5a_fila = 100
-posicion_y_enemigo_8_5a_fila = 100
-posicion_y_enemigo_9_5a_fila = 100
-posicion_y_enemigo_10_5a_fila = 100
-posicion_y_enemigo_11_5a_fila = 100
+position_x_enemy_1_4a_row = window_x / 12
+position_x_enemy_2_4a_row = window_x / 12 * 2
+position_x_enemy_3_4a_row = window_x / 12 * 3
+position_x_enemy_4_4a_row = window_x / 12 * 4
+position_x_enemy_4_4a_row = window_x / 12 * 5
+position_x_enemy_6_4a_row = window_x / 12 * 6
+position_x_enemy_7_4a_row = window_x / 12 * 7
+position_x_enemy_8_4a_row = window_x / 12 * 8
+position_x_enemy_9_4a_row = window_x / 12 * 9
+position_x_enemy_10_4a_row = window_x / 12 * 10
+position_x_enemy_11_4a_row = window_x / 12 * 11
+
+
+position_y_enemy_1_4a_row = 80
+position_y_enemy_2_4a_row = 80
+position_y_enemy_3_4a_row = 80
+position_y_enemy_4_4a_row = 80
+position_y_enemy_5_4a_row = 80
+position_y_enemy_6_4a_row = 80
+position_y_enemy_7_4a_row = 80
+position_y_enemy_8_4a_row = 80
+position_y_enemy_9_4a_row = 80
+position_y_enemy_10_4a_row = 80
+position_y_enemy_11_4a_row = 80
 
 #----------------------------------------------
-posicion_x_nave = pantalla_x / 2
-posicion_y_nave = pantalla_y -10
 
-PANTALLA = pygame.display.set_mode((pantalla_x, pantalla_y))
-disparos = 100
+#enemys fifth row
+#----------------------------------------------
+
+position_x_enemy_1_5a_row = window_x / 12
+position_x_enemy_2_5a_row = window_x / 12 * 2
+position_x_enemy_3_5a_row = window_x / 12 * 3
+position_x_enemy_4_5a_row = window_x / 12 * 4
+position_x_enemy_5_5a_row = window_x / 12 * 5
+position_x_enemy_6_5a_row = window_x / 12 * 6
+position_x_enemy_7_5a_row = window_x / 12 * 7
+position_x_enemy_8_5a_row = window_x / 12 * 8
+position_x_enemy_9_5a_row = window_x / 12 * 9
+position_x_enemy_10_5a_row = window_x / 12 * 10
+position_x_enemy_11_5a_row = window_x / 12 * 11
+
+position_y_enemy_1_5a_row = 100
+position_y_enemy_2_5a_row = 100
+position_y_enemy_3_5a_row = 100
+position_y_enemy_4_5a_row = 100
+position_y_enemy_5_5a_row = 100
+position_y_enemy_6_5a_row = 100
+position_y_enemy_7_5a_row = 100
+position_y_enemy_8_5a_row = 100
+position_y_enemy_9_5a_row = 100
+position_y_enemy_10_5a_row = 100
+position_y_enemy_11_5a_row = 100
+
+#----------------------------------------------
+
+position_x_spaceship = window_x / 2
+position_y_spaceship = window_y - 10
+
+munition_x = position_x_spaceship + 6
+munition_y = position_y_spaceship
+
+window = pygame.display.set_mode((window_x, window_y))
 Reloj = pygame.time.Clock()
 FPS = 40
-fuente = pygame.font.SysFont(None, 30)
+font = pygame.font.SysFont(None, 24)
 
 #---------------------------------------------------------------------------------------------
 
-#bucle del juego
+#the game's loop
 #--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 while True:
-    PANTALLA.blit(nave, (posicion_x_nave, posicion_y_nave))
-    PANTALLA.blit(enemigo_1_1, (posicion_x_enemigo_1_1a_fila, posicion_y_enemigo_1_1a_fila))
+    window.blit(spaceship, (position_x_spaceship, position_y_spaceship))
+    window.blit(enemy_1_1, (position_x_enemy_1_1a_row, position_y_enemy_1_1a_row))
+    
     while True:
-        PANTALLA.fill(COLORDEPANTALLA)
- 
-        PANTALLA.blit(nave, (posicion_x_nave, posicion_y_nave))
-        PANTALLA.blit(enemigo_1_1, (posicion_x_enemigo_1_1a_fila, posicion_y_enemigo_1_1a_fila))
+        window.fill(windowcolor)
 
-        if posicion_x_enemigo_1_1a_fila == 20:
-            izquierda = True
+        window.blit(spaceship, (position_x_spaceship, position_y_spaceship))
 
-        if posicion_x_enemigo_1_1a_fila == pantalla_x - 20:
-            izquierda = False
+        if munition_on == False:
+            munition_x = position_x_spaceship
+            munition_y = position_y_spaceship
 
-        if izquierda == True:
-            posicion_x_enemigo_1_1a_fila = posicion_x_enemigo_1_1a_fila + 1
+        if position_x_enemy_1_1a_row == 20:
+            left = True
 
-        if izquierda == False:
-            posicion_x_enemigo_1_1a_fila = posicion_x_enemigo_1_1a_fila - 1
+        if position_x_enemy_1_1a_row == window_x - 20:
+            left = False
 
-        print (posicion_x_enemigo_1_1a_fila)
+        if left == True:
+            position_x_enemy_1_1a_row = position_x_enemy_1_1a_row + 1
+
+        if left == False:
+            position_x_enemy_1_1a_row = position_x_enemy_1_1a_row - 1
 
         for event in pygame.event.get():
             if event.type == QUIT:
                 pygame.quit()
                 sys.exit()
 
-#movimiento del personaje
+#spaceship's movement
 #-----------------------------------------------------------------------------------------------------------
 
 
             if event.type == KEYDOWN:
                 if event.key == ord('a') or event.key == K_LEFT:
-                    movimiento_izquierda = True
-                    movimiento_derecha = False
+                    movement_left = True
+                    movement_right = False
 
                 elif event.key == ord('d') or event.key == K_RIGHT:
-                    movimiento_derecha = True
-                    movimiento_izquierda = False
+                    movement_right = True
+                    movement_left = False
 
+                
             if event.type == KEYUP:
                 if event.key == ord('a') or event.key == K_LEFT:
-                    movimiento_izquierda = False
+                    movement_left = False
 
                 elif event.key == ord ('d') or event.key == K_RIGHT:
-                    movimiento_derecha = False
+                    movement_right = False
 
-        if movimiento_izquierda == True:
-            posicion_x_nave = posicion_x_nave - 1
+                if event.key == K_SPACE:
+                    window.blit(munition, (munition_x, munition_y))
+                    munition_on = True
 
-        if movimiento_derecha == True:
-            posicion_x_nave = posicion_x_nave + 1
+        if movement_left == True:
+            position_x_spaceship = position_x_spaceship - 1
+
+        if movement_right == True:
+            position_x_spaceship = position_x_spaceship + 1
 #-------------------------------------------------------------------------------------------------------------
 
-#creacion enemigos
+#enemys creation
+#-------------------------------------------------------------------------------------------------------------
+
+        window.blit(enemy_1_1, (position_x_enemy_1_1a_row, position_y_enemy_1_1a_row))
+
 #-------------------------------------------------------------------------------------------------------------
 
 
-
-#-------------------------------------------------------------------------------------------------------------
+        if munition_on  == True:
+            munition_y = munition_y + 5
+            window.blit(munition, (munition_x, munition_y))
+            print('pasa por aqui')
+            if munition_y == 0:
+                munition_on = False
+                munition_y = 390
+        
         pygame.display.update()
         Reloj.tick(FPS)
