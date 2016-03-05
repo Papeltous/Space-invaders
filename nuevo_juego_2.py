@@ -38,6 +38,10 @@ def Dibujar_Text(text, font, superficie, x, y):
 
 left = False
 
+n0 = False
+
+counter = -1
+
 munition_on = False
 movement_left = False
 movement_right = False
@@ -211,6 +215,7 @@ while True:
     window.blit(munition, (munition_x, munition_y))
 
     while True:
+        counter = counter + 1
 
         if munition_on == False:
             munition_x = position_x_spaceship + 6
@@ -267,11 +272,22 @@ while True:
             position_x_spaceship = position_x_spaceship + 2
 #-------------------------------------------------------------------------------------------------------------
 
-#enemys creation
+#sprites prints
 #-------------------------------------------------------------------------------------------------------------
         window.fill(windowcolor)
-        window.blit(enemy_1_1, (position_x_enemy_1_1a_row, position_y_enemy_1_1a_row))
+        if counter == 0:
+            n0 = True
+        if counter == 20:
+            n0 = False
 
+        if counter == 39:
+            counter = -1
+
+        if n0 == True:
+            window.blit(enemy_1_1, (position_x_enemy_1_1a_row, position_y_enemy_1_1a_row))
+
+        if n0 == False:
+            window.blit(enemy_1_2, (position_x_enemy_1_1a_row, position_y_enemy_1_1a_row))
 
         if munition_on  == True:
             window.blit(munition, (munition_x, munition_y))
