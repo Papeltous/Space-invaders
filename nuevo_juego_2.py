@@ -213,6 +213,14 @@ while True:
     while True:
         window.fill(windowcolor)
 
+        if munition_on  == True:
+            munition_y = munition_y + 5
+            window.blit(munition, (munition_x, munition_y))
+            print('pasa por aqui')
+            if munition_y == 0:
+                munition_on = False
+                munition_y = 390
+
         window.blit(spaceship, (position_x_spaceship, position_y_spaceship))
 
         if munition_on == False:
@@ -275,14 +283,5 @@ while True:
 
 #-------------------------------------------------------------------------------------------------------------
 
-
-        if munition_on  == True:
-            munition_y = munition_y + 5
-            window.blit(munition, (munition_x, munition_y))
-            print('pasa por aqui')
-            if munition_y == 0:
-                munition_on = False
-                munition_y = 390
-        
         pygame.display.update()
         Reloj.tick(FPS)
