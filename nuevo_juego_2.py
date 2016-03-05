@@ -39,7 +39,6 @@ def Dibujar_Text(text, font, superficie, x, y):
 left = False
 
 munition_on = False
-
 movement_left = False
 movement_right = False
 
@@ -209,22 +208,12 @@ font = pygame.font.SysFont(None, 24)
 while True:
     window.blit(spaceship, (position_x_spaceship, position_y_spaceship))
     window.blit(enemy_1_1, (position_x_enemy_1_1a_row, position_y_enemy_1_1a_row))
-    
+    window.blit(munition, (munition_x, munition_y))
+
     while True:
-        window.fill(windowcolor)
-
-        if munition_on  == True:
-            munition_y = munition_y + 5
-            window.blit(munition, (munition_x, munition_y))
-            print('pasa por aqui')
-            if munition_y == 0:
-                munition_on = False
-                munition_y = 390
-
-        window.blit(spaceship, (position_x_spaceship, position_y_spaceship))
 
         if munition_on == False:
-            munition_x = position_x_spaceship
+            munition_x = position_x_spaceship + 6
             munition_y = position_y_spaceship
 
         if position_x_enemy_1_1a_row == 20:
@@ -268,18 +257,30 @@ while True:
                 if event.key == K_SPACE:
                     window.blit(munition, (munition_x, munition_y))
                     munition_on = True
+                    munition_y = 390
+                    munition_x = position_x_spaceship + 6
 
         if movement_left == True:
-            position_x_spaceship = position_x_spaceship - 1
+            position_x_spaceship = position_x_spaceship - 2
 
         if movement_right == True:
-            position_x_spaceship = position_x_spaceship + 1
+            position_x_spaceship = position_x_spaceship + 2
 #-------------------------------------------------------------------------------------------------------------
 
 #enemys creation
 #-------------------------------------------------------------------------------------------------------------
-
+        window.fill(windowcolor)
         window.blit(enemy_1_1, (position_x_enemy_1_1a_row, position_y_enemy_1_1a_row))
+
+
+        if munition_on  == True:
+            window.blit(munition, (munition_x, munition_y))
+            munition_y = munition_y - 5
+
+            if munition_y == 0:
+                munition_on = False
+
+        window.blit(spaceship, (position_x_spaceship, position_y_spaceship))
 
 #-------------------------------------------------------------------------------------------------------------
 
