@@ -132,6 +132,8 @@ counter_3 = 0
 
 counter_2 = 0
 
+counter_4 = 0
+
 counter_2_0 = True
 
 window = pygame.display.set_mode((window_x, window_y))
@@ -142,9 +144,13 @@ font = pygame.font.SysFont(None, 24)
 
 Init = False
 
-pygame.display.update
-window.fill(windowcolor)
-window.blit(Init_image, (0,0))
+
+
+
+
+Draw_Text('Space invaders.', font, window, (window_x / 3), (window_y / 3))
+Draw_Text('Press a key to start the game.', font, window, (window_x / 3) - 30, (window_y / 3) + 50)
+pygame.display.update()
 waitForPlayerToPressKey()
 
 
@@ -155,59 +161,52 @@ waitForPlayerToPressKey()
 while True:
 
     while True:
-        window.blit(Init_image, (0,0))
-        if counter_3 == 1:
-            time.sleep(5)
-
         window.fill(windowcolor)
         counter_3 += 1
 
-        if counter_2 == -30:
-            counter_2_0 = True
-
-        if counter_2 == 20:
-            counter_2_0 = False
-
-
-        if counter_2_0 == True:
-            counter_2 = counter_2 + 1
         
-        if counter_2_0 == False:
-            counter_2 = counter_2 - 1
 
-        position_x_enemy_1a_row = position_x_enemy_1a_row + 1
+        if counter_3 / 5 == int(counter_3 / 5):
+
+            counter_4 = counter_4 + 1
+
+            if counter == 0:
+                n0 = True
+            if counter == 1:
+                n0 = False
+
+            if counter == 2:
+                counter = -1
+
+            if counter_4 / 40 == int(counter_4 / 40):
+                position_y_enemy_1a_row = position_y_enemy_1a_row + 5
+
+            counter = counter + 1
+
+            if counter_2 == -20:
+                counter_2_0 = True
+
+            if counter_2 == 20:
+                counter_2_0 = False
+
+
+            if counter_2_0 == True:
+                counter_2 = counter_2 + 1
+            
+            if counter_2_0 == False:
+                counter_2 = counter_2 - 1
+
+            position_x_enemy_1a_row = position_x_enemy_1a_row + 1
 
         for nº_alien_in_row in range(1,13):
             position_x_enemy_1a_row = window_x/13 * nº_alien_in_row
             position_x_enemy_1a_row = position_x_enemy_1a_row + counter_2
+ 
             if n0 == True:
                 window.blit(enemy_1_1, (position_x_enemy_1a_row, position_y_enemy_1a_row))
 
             if n0 == False:
                 window.blit(enemy_1_2, (position_x_enemy_1a_row, position_y_enemy_1a_row))
-
-            
-
-            if n0 == True:
-                window.blit(enemy_1_1, (position_x_enemy_1a_row, position_y_enemy_1a_row))
-
-            if n0 == False:
-                window.blit(enemy_1_2, (position_x_enemy_1a_row, position_y_enemy_1a_row))
-
-
-
-        if counter == 0:
-            n0 = True
-        if counter == 20:
-            n0 = False
-
-        if counter == 39:
-            position_y_enemy_1a_row = position_y_enemy_1a_row + 5
-            counter = -1
-
-
-
-        counter = counter + 1
 
 		
 		
