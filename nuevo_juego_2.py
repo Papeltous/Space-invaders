@@ -142,16 +142,28 @@ FPS = 40
 
 font = pygame.font.SysFont(None, 24)
 
+font_big = pygame.font.SysFont(None, 64)
+
 Init = False
 
-
-
-
-
 Draw_Text('Space invaders.', font, window, (window_x / 3), (window_y / 3))
-Draw_Text('Press a key to start the game.', font, window, (window_x / 3) - 30, (window_y / 3) + 50)
+Draw_Text('Press a key for go to the controls.', font, window, (window_x / 3) - 30, (window_y / 3) + 50)
 pygame.display.update()
 waitForPlayerToPressKey()
+
+window.fill(windowcolor)
+
+Draw_Text('CONTROLS', font_big, window, window_x/4, (window_y/3) - 50)
+
+Draw_Text('For you can move you need to press the a and d keys.', font, window, 0, (window_y / 3))
+Draw_Text('For shoot you need to press the key space.', font, window, 0, (window_y / 3) + 50)
+Draw_Text('Press a key to start.', font, window, 0, (window_y / 3) + 100)
+pygame.display.update()
+waitForPlayerToPressKey()
+
+pygame.display.update
+
+window.fill(windowcolor)
 
 
 #---------------------------------------------------------------------------------------------
@@ -202,6 +214,8 @@ while True:
             position_x_enemy_1a_row = window_x/13 * nº_alien_in_row
             position_x_enemy_1a_row = position_x_enemy_1a_row + counter_2
  
+            
+ 
             if n0 == True:
                 window.blit(enemy_1_1, (position_x_enemy_1a_row, position_y_enemy_1a_row))
 
@@ -213,8 +227,8 @@ while True:
 		
 		
         if munition_on == False:
-            munition_x = position_x_spaceship + 6
-            munition_y = position_y_spaceship
+            munition_x = position_x_spaceship + 7
+            munition_y = position_y_spaceship - 3
 
         for event in pygame.event.get():
 
@@ -229,6 +243,8 @@ while True:
                     movement_right = True
                     movement_left = False
 
+#-----------------------------------------------------------------------------------------------------------
+
                 if event.key == K_ESCAPE:
                     terminate()
 
@@ -240,11 +256,13 @@ while True:
                 elif event.key == ord ('d') or event.key == K_RIGHT:
                     movement_right = False
 
-                if event.key == K_SPACE:
-                    window.blit(munition, (munition_x, munition_y))
-                    munition_on = True
-                    munition_y = 390
-                    munition_x = position_x_spaceship + 6
+                if munition_on == False:
+
+                    if event.key == K_SPACE:
+                        window.blit(munition, (munition_x, munition_y))
+                        munition_on = True
+                        munition_y = 390
+                        munition_x = position_x_spaceship + 7
 
         if movement_left == True:
             position_x_spaceship = position_x_spaceship - 2
