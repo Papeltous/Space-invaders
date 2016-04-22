@@ -21,35 +21,10 @@ def Draw_Text(text, font, surface, x, y):
     rectext.topleft = (x, y)
     surface.blit(objtext, rectext)
 
-def munitionHasHitAlien1(MunitionRect, enemies):
-    for e in enemies:
-        if MunitionRect.colliderect(e['rect']):
-            print("toco!")
-            return True
-        return False
-
-def munitionHasHitAlien2(MunitionRect, enemies_2):
-    for e in enemies_2:
-        if MunitionRect.colliderect(e['rect']):
-            return True
-        return False
-
-def munitionHasHitAlien3(MunitionRect, enemies_3):
-    for e in enemies_3:
-        if MunitionRect.colliderect(e['rect']):
-            return True
-        return False
-
-def munitionHasHitAlien4(MunitionRect, enemies_4):
-    for e in enemies_4:
-        if MunitionRect.colliderect(e['rect']):
-            return True
-        return False
-
-def munitionHasHitAlien5(MunitionRect, enemies_5):
-    for e in enemies_5:
-        if MunitionRect.colliderect(e['rect']):
-            return True
+def munitionHasHitAlien1(MunitionRect, enemies_1):
+    for e in enemies_1:
+        if MunitionRect['rect'].colliderect(e['rect']):
+            return e
         return False
 
 def waitForPlayerToPressKey():
@@ -67,8 +42,7 @@ def waitForPlayerToPressKey():
 #sprites creation
 #--------------------------------------------------------------------------------------------
 
-munition = pygame.image.load('munition.png')
-MunitionRect = munition.get_rect
+munition = pygame.image.load('munition.png')    
 
 spaceship = pygame.image.load('spaceship.png')
 ShipRect = spaceship.get_rect
@@ -134,17 +108,23 @@ counter_2 = 0
 
 counter_4 = 0
 
+counter_5 = 0
+
+counter_6 = 0
+
 counter_2_0 = True
 
 window = pygame.display.set_mode((window_x, window_y))
 Reloj = pygame.time.Clock()
-FPS = 40
+FPS = 1080
 
 font = pygame.font.SysFont(None, 24)
 
 font_big = pygame.font.SysFont(None, 64)
 
 Init = False
+
+right = False
 
 Draw_Text('Space invaders.', font, window, (window_x / 3), (window_y / 3))
 Draw_Text('Press a key for go to the controls.', font, window, (window_x / 3) - 30, (window_y / 3) + 50)
@@ -161,9 +141,11 @@ Draw_Text('Press a key to start.', font, window, 0, (window_y / 3) + 100)
 pygame.display.update()
 waitForPlayerToPressKey()
 
-pygame.display.update
-
 window.fill(windowcolor)
+
+Draw_Text('DOWNLOADING...', font, window, window_x/3, window_y/2)
+
+pygame.display.update()
 
 
 #---------------------------------------------------------------------------------------------
@@ -172,11 +154,82 @@ window.fill(windowcolor)
 #--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 while True:
 
-    while True:
+    enemies_1 = []
+    enemies_2 = []
+    enemies_3 = []
+    enemies_4 = []
+    enemies_5 = []
+
+    MunitionRect = {'rect': pygame.Rect(0, 0, 1, 3),
+                    'speed': 5,
+                    'surface': pygame.transform.scale(munition, (1, 3)),
+                    }
+
+    for x in range(1,25):
+        new_enemy_1 = {'rect': pygame.Rect(0, 0, 22, 16),
+                      'speed': 1,
+                      'surface':pygame.transform.scale(enemy1_actual, (22, 16)),
+                    }
+
+        enemies_1.append(new_enemy_1)
+
+    while True: 
+        if counter_3/20 == int(counter_3/3):
+            enemy1_actual_true = True
+
+        if not counter_3/20 :
+            enemy1_actual_true = False
+
+        if enemy1_actual_true == True:
+            enemy1_actual = enemy_1_2
+
+        if enemy1_actual_true == False:
+            enemy1_actual = enemy_1_1
+
+
+        counter_7 = 0
+
+        for e in enemies_1:
+            counter_7 += 1
+            if munitionHasHitAlien1(MunitionRect, enemies_1):        
+                print('bicho', counter_7)
+                enemies_1.remove(e)
+                print('boom')
+                if counter_3 > 10:
+                    break
+
         window.fill(windowcolor)
         counter_3 += 1
 
-        
+        counter_8 = 0
+
+        for e in enemies_1:
+            counter_8 += 1
+            print('bicho', counter_8, e['rect'])
+            print(MunitionRect['rect'])
+
+
+        if counter_3 == 2:
+            for e in enemies_1[:]:
+                counter_5 += window_x/13
+                e['rect'].move_ip(counter_5, 20) 
+
+        for e in enemies_1[:]:
+            if right == True:
+                e['rect'].move_ip(e['speed'] - e['speed']*2 , 0)
+
+            elif right == False:
+                e['rect'].move_ip(e['speed'], 0)
+
+            if e['rect'].right == window_x:
+                right = True
+
+            if e['rect'].left == 0:
+                right = False
+
+
+        for e in enemies_1:
+            window.blit(e['surface'], e['rect'])        
 
         if counter_3 / 5 == int(counter_3 / 5):
 
@@ -201,7 +254,6 @@ while True:
             if counter_2 == 20:
                 counter_2_0 = False
 
-
             if counter_2_0 == True:
                 counter_2 = counter_2 + 1
             
@@ -210,25 +262,13 @@ while True:
 
             position_x_enemy_1a_row = position_x_enemy_1a_row + 1
 
-        for nº_alien_in_row in range(1,13):
-            position_x_enemy_1a_row = window_x/13 * nº_alien_in_row
-            position_x_enemy_1a_row = position_x_enemy_1a_row + counter_2
- 
-            
- 
-            if n0 == True:
-                window.blit(enemy_1_1, (position_x_enemy_1a_row, position_y_enemy_1a_row))
 
-            if n0 == False:
-                window.blit(enemy_1_2, (position_x_enemy_1a_row, position_y_enemy_1a_row))
-
-		
-		
-		
 		
         if munition_on == False:
             munition_x = position_x_spaceship + 7
             munition_y = position_y_spaceship - 3
+            MunitionRect['rect'].top = position_y_spaceship
+            MunitionRect['rect'].left = position_x_spaceship
 
         for event in pygame.event.get():
 
@@ -269,14 +309,26 @@ while True:
 
         if movement_right == True:
             position_x_spaceship = position_x_spaceship + 2
+
+        if position_x_spaceship == 0:
+            position_x_spaceship = position_x_spaceship + 2
+
+        if position_x_spaceship == window_x:
+            position_x_spaceship = position_x_spaceship - 2
+
 #-------------------------------------------------------------------------------------------------------------  
 
 #sprites prints
 #-------------------------------------------------------------------------------------------------------------
         
         if munition_on  == True:
-            window.blit(munition, (munition_x, munition_y))
-            munition_y = munition_y - 5
+            counter_6 += 1
+            if counter_6 == 1:
+                MunitionRect['rect'].move_ip(munition_x, munition_y)
+            if counter_6 != 1:    
+                window.blit(munition, (munition_x, munition_y))
+                munition_y = munition_y - 5
+                MunitionRect['rect'].move_ip(0, -5)
 
             if munition_y == 0:
                 munition_on = False
