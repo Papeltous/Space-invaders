@@ -1,4 +1,4 @@
-import pygame, sys, time
+import pygame, sys, time, random
 from pygame.locals import *
 
 pygame.init()
@@ -67,7 +67,7 @@ enemy_3Rect = enemy3_actual.get_rect
 
 random_boss = pygame.image.load('random_enemy.png')
 
-#Init_image = pygame.image.load('Init_image.png')
+pygame.mixer.music.load('background.mid')
 
 #--------------------------------------------------------------------------------------------
 
@@ -119,10 +119,10 @@ counter_2_0 = True
 
 window = pygame.display.set_mode((window_x, window_y))
 Reloj = pygame.time.Clock()
-FPS = 1080
+FPS = 60
 
+# Use pygame font, not System Font
 font = pygame.font.Font(None, 24)
-
 font_big = pygame.font.Font(None, 64)
 
 Init = False
@@ -164,7 +164,7 @@ while True:
     enemies_5 = []
 
     MunitionRect = {'rect': pygame.Rect(0, 0, 1, 3),
-                    'speed': 5,
+                    'speed': 100,
                     'surface': pygame.transform.scale(munition, (1, 3)),
                     }
 
@@ -176,7 +176,10 @@ while True:
 
         enemies_1.append(new_enemy_1)
 
+        pygame.mixer.music.play(-1, 0.0)
+
     while True: 
+
         if counter_3/20 == int(counter_3/3):
             enemy1_actual_true = True
 
@@ -200,25 +203,16 @@ while True:
             if munitionHasHitAlien1(MunitionRect, e):
                 print('bicho', counter_7)
                 enemies_1.remove(e)
-                print('boom')
-                if counter_3 > 10:
-                    break
+                print('boom')       
 
         window.fill(windowcolor)
         counter_3 += 1
 
-        counter_8 = 0
-
-        for e in enemies_1:
-            counter_8 += 1
-            print('bicho', counter_8, e['rect'])
-            print(MunitionRect['rect'])
-
-
         if counter_3 == 2:
             for e in enemies_1[:]:
                 counter_5 += window_x/13
-                e['rect'].move_ip(counter_5, 20) 
+                e['rect'].move_ip(counter_5, 100) 
+
 
         for e in enemies_1[:]:
             if right == True:
@@ -267,9 +261,7 @@ while True:
                 counter_2 = counter_2 - 1
 
             position_x_enemy_1a_row = position_x_enemy_1a_row + 1
-
-
-		
+    		
         if munition_on == False:
             munition_x = position_x_spaceship + 7
             munition_y = position_y_spaceship - 3
@@ -310,6 +302,7 @@ while True:
                         munition_y = 390
                         munition_x = position_x_spaceship + 7
 
+
         if movement_left == True:
             position_x_spaceship = position_x_spaceship - 2
 
@@ -333,8 +326,8 @@ while True:
                 MunitionRect['rect'].move_ip(munition_x, munition_y)
             if counter_6 != 1:    
                 window.blit(munition, (munition_x, munition_y))
-                munition_y = munition_y - 5
-                MunitionRect['rect'].move_ip(0, -5)
+                munition_y = munition_y - 10
+                MunitionRect['rect'].move_ip(0, -10)
 
             if munition_y == 0:
                 munition_on = False
@@ -342,6 +335,9 @@ while True:
         window.blit(spaceship, (position_x_spaceship, position_y_spaceship))
 
 #-------------------------------------------------------------------------------------------------------------
+
+
+        print(FPS)
 
         pygame.display.update()
         Reloj.tick(FPS)
