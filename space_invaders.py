@@ -21,10 +21,13 @@ def Draw_Text(text, font, surface, x, y):
     rectext.topleft = (x, y)
     surface.blit(objtext, rectext)
 
-def munitionHasHitAlien1(MunitionRect, enemies_1):
-    for e in enemies_1:
-        if MunitionRect['rect'].colliderect(e['rect']):
-            return e
+def munitionHasHitAlien1(MunitionRect, e):
+    # You only need to check the colliderect with one enemy, contained in variable e.
+    # Return True if collide, False if not collide
+
+    if MunitionRect['rect'].colliderect(e['rect']):
+        return True
+    else:
         return False
 
 def waitForPlayerToPressKey():
@@ -64,7 +67,7 @@ enemy_3Rect = enemy3_actual.get_rect
 
 random_boss = pygame.image.load('random_enemy.png')
 
-Init_image = pygame.image.load('Init_image.png')
+#Init_image = pygame.image.load('Init_image.png')
 
 #--------------------------------------------------------------------------------------------
 
@@ -118,9 +121,9 @@ window = pygame.display.set_mode((window_x, window_y))
 Reloj = pygame.time.Clock()
 FPS = 1080
 
-font = pygame.font.SysFont(None, 24)
+font = pygame.font.Font(None, 24)
 
-font_big = pygame.font.SysFont(None, 64)
+font_big = pygame.font.Font(None, 64)
 
 Init = False
 
@@ -191,7 +194,10 @@ while True:
 
         for e in enemies_1:
             counter_7 += 1
-            if munitionHasHitAlien1(MunitionRect, enemies_1):        
+
+            # If you do a for e in enemies_1, then you have every enemy in e, and you have to call the munitionHasHitAlien1
+            # using only one enemy (e) and not the list of all enemies (enemies_1)
+            if munitionHasHitAlien1(MunitionRect, e):
                 print('bicho', counter_7)
                 enemies_1.remove(e)
                 print('boom')
