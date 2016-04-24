@@ -335,9 +335,5 @@ while True:
         window.blit(spaceship, (position_x_spaceship, position_y_spaceship))
 
 #-------------------------------------------------------------------------------------------------------------
-
-
-        print(FPS)
-
         pygame.display.update()
         Reloj.tick(FPS)
