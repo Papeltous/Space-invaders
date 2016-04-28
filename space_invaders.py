@@ -21,11 +21,47 @@ def Draw_Text(text, font, surface, x, y):
     rectext.topleft = (x, y)
     surface.blit(objtext, rectext)
 
-def munitionHasHitAlien1(MunitionRect, e):
+def munitionHasHitAlien1(MunitionRect, e_1):
     # You only need to check the colliderect with one enemy, contained in variable e.
     # Return True if collide, False if not collide
 
-    if MunitionRect['rect'].colliderect(e['rect']):
+    if MunitionRect['rect'].colliderect(e_1['rect']):
+        return True
+    else:
+        return False
+
+def munitionHasHitAlien2(MunitionRect, e_2):
+    # You only need to check the colliderect with one enemy, contained in variable e.
+    # Return True if collide, False if not collide
+
+    if MunitionRect['rect'].colliderect(e_2['rect']):
+        return True
+    else:
+        return False
+
+def munitionHasHitAlien3(MunitionRect, e_3):
+    # You only need to check the colliderect with one enemy, contained in variable e.
+    # Return True if collide, False if not collide
+
+    if MunitionRect['rect'].colliderect(e_3['rect']):
+        return True
+    else:
+        return False
+
+def munitionHasHitAlien4(MunitionRect, e_4):
+    # You only need to check the colliderect with one enemy, contained in variable e.
+    # Return True if collide, False if not collide
+
+    if MunitionRect['rect'].colliderect(e_4['rect']):
+        return True
+    else:
+        return False
+
+def munitionHasHitAlien5(MunitionRect, e_5):
+    # You only need to check the colliderect with one enemy, contained in variable e.
+    # Return True if collide, False if not collide
+
+    if MunitionRect['rect'].colliderect(e_5['rect']):
         return True
     else:
         return False
@@ -47,27 +83,23 @@ def waitForPlayerToPressKey():
 
 munition = pygame.image.load('munition.png')    
 
+explocion = pygame.image.load('explocion.png')
+
 spaceship = pygame.image.load('spaceship.png')
-ShipRect = spaceship.get_rect
+
+spaceship = pygame.transform.scale(spaceship, (36, 24))
 
 enemy_1_1 = pygame.image.load('enemy1.png')
 enemy_1_2 = pygame.image.load('enemy1_2.png')
-enemy1_actual = enemy_1_1
-enemy_1Rect = enemy1_actual.get_rect
 
 enemy_2 = pygame.image.load('enemy.png')
 enemy_2_2 = pygame.image.load('enemy2_2.png')
-enemy2_actual = enemy_2
-enemy_2Rect = enemy2_actual.get_rect
 
 enemy_3 = pygame.image.load('enemy3.png')
 enemy_3_2 = pygame.image.load('enemy3_1.png')
-enemy3_actual = enemy_3
-enemy_3Rect = enemy3_actual.get_rect
 
 random_boss = pygame.image.load('random_enemy.png')
 
-pygame.mixer.music.load('background.mid')
 
 #--------------------------------------------------------------------------------------------
 
@@ -87,8 +119,8 @@ munition_on = False
 movement_left = False
 movement_right = False
 
-window_x = 600
-window_y = 400
+window_x = 700
+window_y = 600
 
 #enemys first row
 #---------------------------------------------
@@ -100,7 +132,7 @@ position_y_enemy_1a_row = 20
 
 
 position_x_spaceship = window_x / 2
-position_y_spaceship = window_y - 10
+position_y_spaceship = window_y - 40
 
 munition_x = position_x_spaceship + 6
 munition_y = position_y_spaceship
@@ -115,7 +147,13 @@ counter_5 = 0
 
 counter_6 = 0
 
+counter_7 = 0
+
+counter_8 = 0
+
 counter_2_0 = True
+
+ready_for_explocion = False
 
 window = pygame.display.set_mode((window_x, window_y))
 Reloj = pygame.time.Clock()
@@ -163,20 +201,61 @@ while True:
     enemies_4 = []
     enemies_5 = []
 
-    MunitionRect = {'rect': pygame.Rect(0, 0, 1, 3),
-                    'speed': 100,
-                    'surface': pygame.transform.scale(munition, (1, 3)),
+    MunitionRect = {'rect': pygame.Rect(100, 0, 3, 9),
+                    'speed': 200,
+                    'surface': pygame.transform.scale(munition, (3, 9)),
                     }
 
-    for x in range(1,25):
-        new_enemy_1 = {'rect': pygame.Rect(0, 0, 22, 16),
+    for x in range(1,12):
+        new_enemy_1 = {'rect': pygame.Rect(0, 0, 33, 24),
                       'speed': 1,
-                      'surface':pygame.transform.scale(enemy1_actual, (22, 16)),
+                      'surface':pygame.transform.scale(enemy_1_1, (33, 24)),
+
+    
                     }
 
         enemies_1.append(new_enemy_1)
 
-        pygame.mixer.music.play(-1, 0.0)
+
+    for x in range(1,12):
+        new_enemy_2 = {'rect': pygame.Rect(0, 0, 33, 24),
+                      'speed': 1,
+                      'surface':pygame.transform.scale(enemy_1_1, (33, 24)),
+
+
+                    }
+
+        enemies_2.append(new_enemy_2)
+
+    for x in range(1,12):
+        new_enemy_3 = {'rect': pygame.Rect(0, 0, 24, 24),
+                      'speed': 1,
+                      'surface':pygame.transform.scale(enemy_2, (24, 24)),
+
+    
+                    }
+
+        enemies_3.append(new_enemy_3)
+
+    for x in range(1,12):
+        new_enemy_4 = {'rect': pygame.Rect(0, 0, 36, 24),
+                      'speed': 1,
+                      'surface':pygame.transform.scale(enemy_3, (36, 24)),
+
+    
+                    }
+
+        enemies_4.append(new_enemy_4)
+
+    for x in range(1,12):
+        new_enemy_5 = {'rect': pygame.Rect(0, 0, 36, 24),
+                      'speed': 1,
+                      'surface':pygame.transform.scale(enemy_3, (36, 24)),
+
+    
+                    }
+
+        enemies_5.append(new_enemy_5)
 
     while True: 
 
@@ -195,41 +274,264 @@ while True:
 
         counter_7 = 0
 
-        for e in enemies_1:
+        for e_1 in enemies_1:
             counter_7 += 1
 
-            # If you do a for e in enemies_1, then you have every enemy in e, and you have to call the munitionHasHitAlien1
+            # If you do a for e_1 in enemies_1, then you have every enemy in e, and you have to call the munitionHasHitAlien1
             # using only one enemy (e) and not the list of all enemies (enemies_1)
-            if munitionHasHitAlien1(MunitionRect, e):
-                print('bicho', counter_7)
-                enemies_1.remove(e)
-                print('boom')       
+            if munitionHasHitAlien1(MunitionRect, e_1):
+                enemies_1.remove(e_1)
+                munition_on = False
+                counter_8 = 0
+
+        counter_7 = 0
+
+        for e_2 in enemies_2:
+            counter_7 += 1
+
+            # If you do a for e_2 in enemies_2, then you have every enemy in e, and you have to call the munitionHasHitAlien2
+            # using only one enemy (e) and not the list of all enemies (enemies_2)
+            if munitionHasHitAlien2(MunitionRect, e_2):
+                enemies_2.remove(e_2)
+                munition_on = False
+                counter_8 = 0
+
+        counter_7 = 0
+
+        for e_3 in enemies_3:
+            counter_7 += 1
+
+            # If you do a for e_3 in enemies_3, then you have every enemy in e, and you have to call the munitionHasHitAlien3
+            # using only one enemy (e) and not the list of all enemies (enemies_3)
+            if munitionHasHitAlien3(MunitionRect, e_3):
+                enemies_3.remove(e_3)
+                munition_on = False
+                counter_8 = 0
+
+
+        counter_7 = 0
+
+        for e_4 in enemies_4:
+            counter_7 += 1
+
+            # If you do a for e_4 in enemies_4, then you have every enemy in e, and you have to call the munitionHasHitAlien4
+            # using only one enemy (e) and not the list of all enemies (enemies_4)
+            if munitionHasHitAlien4(MunitionRect, e_4):
+                enemies_4.remove(e_4)
+                munition_on = False
+                counter_8 = 0
+
+        counter_7 = 0
+
+        for e_5 in enemies_5:
+            counter_7 += 1
+
+            # If you do a for e_5 in enemies_5, then you have every enemy in e, and you have to call the munitionHasHitAlien5
+            # using only one enemy (e) and not the list of all enemies (enemies_5)
+            if munitionHasHitAlien5(MunitionRect, e_5):
+                enemies_5.remove(e_5)
+                munition_on = False
+                counter_8 = 0
 
         window.fill(windowcolor)
         counter_3 += 1
 
+        counter_5 = 0
+
         if counter_3 == 2:
-            for e in enemies_1[:]:
+            for e_1 in enemies_1[:]:
                 counter_5 += window_x/13
-                e['rect'].move_ip(counter_5, 100) 
+                e_1['rect'].move_ip(counter_5, window_y/8 * 1) 
+
+        counter_9 = 0
+
+        if counter_3 == 2:
+            for e_2 in enemies_2[:]:
+                counter_9 += window_x/13
+                e_2['rect'].move_ip(counter_9, window_y/8 * 2)         
+
+        counter_10 = 0
+
+        if counter_3 == 2:
+            for e_3 in enemies_3[:]:
+                counter_10 += window_x/13
+                e_3['rect'].move_ip(counter_10, window_y/8 * 3) 
+
+        counter_11 = 0
+
+        if counter_3 == 2:
+            for e_4 in enemies_4[:]:
+                counter_11 += window_x/13
+                e_4['rect'].move_ip(counter_11, window_y/8 * 4)
+
+        counter_13 = 0
+
+        if counter_3 == 2:
+            for e_5 in enemies_5[:]:
+                counter_13 += window_x/13
+                e_5['rect'].move_ip(counter_13, window_y/8 * 5)
+
+        if counter_3/20 == int(counter_3/20):
+            for e_1 in enemies_1:
+                e_1['surface'] = pygame.transform.scale(enemy_1_2, (33, 24))
+
+        if counter_3/40 == int(counter_3/40):
+            for e_1 in enemies_1:
+                e_1['surface'] = pygame.transform.scale(enemy_1_1, (33, 24))            
 
 
-        for e in enemies_1[:]:
+        for e_1 in enemies_1[:]:
             if right == True:
-                e['rect'].move_ip(e['speed'] - e['speed']*2 , 0)
+                e_1['rect'].move_ip(e_1['speed'] - e_1['speed']*2 , 0)
 
             elif right == False:
-                e['rect'].move_ip(e['speed'], 0)
+                e_1['rect'].move_ip(e_1['speed'], 0)
 
-            if e['rect'].right == window_x:
+            if e_1['rect'].right == window_x:
                 right = True
 
-            if e['rect'].left == 0:
+            if e_1['rect'].left == 0:
                 right = False
+                for e_1 in enemies_1:
+                    e_1['rect'].move_ip(0, 10)
+
+                for e_2 in enemies_2:
+                    e_2['rect'].move_ip(0, 10)
+
+                for e_3 in enemies_3:
+                    e_3['rect'].move_ip(0, 10)
+
+                for e_4 in enemies_4:
+                    e_4['rect'].move_ip(0, 10)
+
+                for e_5 in enemies_5:
+                    e_5['rect'].move_ip(0, 10)
+
+        for e_1 in enemies_1:
+            window.blit(e_1['surface'], e_1['rect'])
 
 
-        for e in enemies_1:
-            window.blit(e['surface'], e['rect'])        
+        for e_2 in enemies_2[:]:
+            if right == True:
+                e_2['rect'].move_ip(e_2['speed'] - e_2['speed']*2 , 0)
+
+            elif right == False:
+                e_2['rect'].move_ip(e_2['speed'], 0)
+
+            if e_2['rect'].right == window_x:
+                right = True
+
+            if e_2['rect'].left == 0:
+                right = False
+                for e_1 in enemies_1:
+                    e_1['rect'].move_ip(0, 10)
+
+                for e_2 in enemies_2:
+                    e_2['rect'].move_ip(0, 10)
+
+                for e_3 in enemies_3:
+                    e_3['rect'].move_ip(0, 10)
+
+                for e_4 in enemies_4:
+                    e_4['rect'].move_ip(0, 10)
+
+                for e_5 in enemies_5:
+                    e_5['rect'].move_ip(0, 10)
+
+        for e_2 in enemies_2:
+            window.blit(e_2['surface'], e_2['rect'])        
+
+        for e_3 in enemies_3[:]:
+            if right == True:
+                e_3['rect'].move_ip(e_3['speed'] - e_3['speed']*2 , 0)
+
+            elif right == False:
+                e_3['rect'].move_ip(e_3['speed'], 0)
+
+            if e_3['rect'].right == window_x:
+                right = True
+
+            if e_3['rect'].left == 0:
+                right = False
+                for e_1 in enemies_1:
+                    e_1['rect'].move_ip(0, 10)
+
+                for e_2 in enemies_2:
+                    e_2['rect'].move_ip(0, 10)
+
+                for e_3 in enemies_3:
+                    e_3['rect'].move_ip(0, 10)
+
+                for e_4 in enemies_4:
+                    e_4['rect'].move_ip(0, 10)
+
+                for e_5 in enemies_5:
+                    e_5['rect'].move_ip(0, 10)
+
+
+        for e_3 in enemies_3:
+            window.blit(e_3['surface'], e_3['rect'])        
+
+        for e_4 in enemies_4[:]:
+            if right == True:
+                e_4['rect'].move_ip(e_4['speed'] - e_4['speed']*2 , 0)
+
+            elif right == False:
+                e_4['rect'].move_ip(e_4['speed'], 0)
+
+            if e_4['rect'].right == window_x:
+                right = True
+
+            if e_4['rect'].left == 0:
+                right = False
+                for e_1 in enemies_1:
+                    e_1['rect'].move_ip(0, 10)
+
+                for e_2 in enemies_2:
+                    e_2['rect'].move_ip(0, 10)
+
+                for e_3 in enemies_3:
+                    e_3['rect'].move_ip(0, 10)
+
+                for e_4 in enemies_4:
+                    e_4['rect'].move_ip(0, 10)
+
+                for e_5 in enemies_5:
+                    e_5['rect'].move_ip(0, 10)
+
+        for e_4 in enemies_4:
+            window.blit(e_4['surface'], e_4['rect'])        
+
+        for e_5 in enemies_5[:]:
+            if right == True:
+                e_5['rect'].move_ip(e_5['speed'] - e_5['speed']*2 , 0)
+
+            elif right == False:
+                e_5['rect'].move_ip(e_5['speed'], 0)
+
+            if e_5['rect'].right == window_x:
+                right = True
+
+            if e_5['rect'].left == 0:
+                right = False
+                for e_1 in enemies_1:
+                    e_1['rect'].move_ip(0, 10)
+
+                for e_2 in enemies_2:
+                    e_2['rect'].move_ip(0, 10)
+
+                for e_3 in enemies_3:
+                    e_3['rect'].move_ip(0, 10)
+
+                for e_4 in enemies_4:
+                    e_4['rect'].move_ip(0, 10)
+
+                for e_5 in enemies_5:
+                    e_5['rect'].move_ip(0, 10)
+
+        for e_5 in enemies_5:
+            window.blit(e_5['surface'], e_5['rect'])        
+
 
         if counter_3 / 5 == int(counter_3 / 5):
 
@@ -299,7 +601,7 @@ while True:
                     if event.key == K_SPACE:
                         window.blit(munition, (munition_x, munition_y))
                         munition_on = True
-                        munition_y = 390
+                        munition_y = window_y -10
                         munition_x = position_x_spaceship + 7
 
 
