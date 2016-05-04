@@ -2,7 +2,7 @@ import pygame, sys, time, random
 from pygame.locals import *
 
 pygame.init()
-pygame.display.set_caption('ventana de prueva')
+pygame.display.set_caption('ventana de prueba')
 
 windowcolor = (0, 0, 0)
 TEXTCOLOR = (255, 255, 255)
@@ -100,6 +100,14 @@ enemy_3_2 = pygame.image.load('enemy3_1.png')
 
 random_boss = pygame.image.load('random_enemy.png')
 
+barrier_normal = pygame.image.load('Barrier_normal.png')
+barrier_normal_destroyed = pygame.image.load('Barrier_normal_destroyed.png')
+
+barrier_corner_left = pygame.image.load('Barrier_corner_left.png')
+barrier_corner_left_destryed = pygame.image.load('Barrier_corner_left_destroyed.png')
+
+barrier_corner_right = pygame.image.load('Barrier_corner_right.png')
+barrier_corner_right_destroyed = pygame.image.load('Barrier_corner_right_destroyed.png')
 
 #--------------------------------------------------------------------------------------------
 
@@ -135,7 +143,7 @@ position_x_spaceship = window_x / 2
 position_y_spaceship = window_y - 40
 
 munition_x = position_x_spaceship + 6
-munition_y = position_y_spaceship
+munition_y = position_y_spaceship + 3
 
 counter_3 = 0
 
@@ -149,7 +157,7 @@ counter_6 = 0
 
 counter_7 = 0
 
-counter_8 = 0
+counter_8 = 0 
 
 counter_2_0 = True
 
@@ -167,33 +175,34 @@ Init = False
 
 right = False
 
-Draw_Text('Space invaders.', font, window, (window_x / 3), (window_y / 3))
-Draw_Text('Press a key for go to the controls.', font, window, (window_x / 3) - 30, (window_y / 3) + 50)
-pygame.display.update()
-waitForPlayerToPressKey()
-
-window.fill(windowcolor)
-
-Draw_Text('CONTROLS', font_big, window, window_x/4, (window_y/3) - 50)
-
-Draw_Text('For you can move you need to press the a and d keys.', font, window, 0, (window_y / 3))
-Draw_Text('For shoot you need to press the key space.', font, window, 0, (window_y / 3) + 50)
-Draw_Text('Press a key to start.', font, window, 0, (window_y / 3) + 100)
-pygame.display.update()
-waitForPlayerToPressKey()
-
-window.fill(windowcolor)
-
-Draw_Text('DOWNLOADING...', font, window, window_x/3, window_y/2)
-
-pygame.display.update()
-
-
 #---------------------------------------------------------------------------------------------
 
 #the game's loop
 #--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 while True:
+
+    exit = False
+
+    Draw_Text('Space invaders.', font, window, (window_x / 3), (window_y / 3))
+    Draw_Text('Press a key for go to the controls.', font, window, (window_x / 3) - 30, (window_y / 3) + 50)
+    pygame.display.update()
+    waitForPlayerToPressKey()
+
+    window.fill(windowcolor)
+
+    Draw_Text('CONTROLS', font_big, window, window_x/4, (window_y/3) - 50)
+
+    Draw_Text('For you can move you need to press the a and d keys.', font, window, 0, (window_y / 3))
+    Draw_Text('For shoot you need to press the key space.', font, window, 0, (window_y / 3) + 50)
+    Draw_Text('Press a key to start.', font, window, 0, (window_y / 3) + 100)
+    pygame.display.update()
+    waitForPlayerToPressKey()
+
+    window.fill(windowcolor)
+
+    Draw_Text('DOWNLOADING...', font, window, window_x/3, window_y/2)
+
+    pygame.display.update()
 
     enemies_1 = []
     enemies_2 = []
@@ -257,7 +266,12 @@ while True:
 
         enemies_5.append(new_enemy_5)
 
-    while True: 
+        counter_3 = 0
+
+    while True:
+
+        if enemies_1 == [] and enemies_2 == [] and enemies_3 == [] and enemies_4 == [] and enemies_5 == []:
+            break
 
         if counter_3/20 == int(counter_3/3):
             enemy1_actual_true = True
@@ -348,7 +362,7 @@ while True:
         if counter_3 == 2:
             for e_2 in enemies_2[:]:
                 counter_9 += window_x/13
-                e_2['rect'].move_ip(counter_9, window_y/8 * 2)         
+                e_2['rect'].move_ip(counter_9, window_y/8 * 2)     
 
         counter_10 = 0
 
@@ -375,9 +389,33 @@ while True:
             for e_1 in enemies_1:
                 e_1['surface'] = pygame.transform.scale(enemy_1_2, (33, 24))
 
+            for e_2 in enemies_2:
+                e_2['surface'] = pygame.transform.scale(enemy_1_2, (33, 24))
+
+            for e_3 in enemies_3:
+                e_3['surface'] = pygame.transform.scale(enemy_2_2, (24, 24))
+
+            for e_4 in enemies_4:
+                e_4['surface'] = pygame.transform.scale(enemy_3_2, (36, 24))
+
+            for e_5 in enemies_5:
+                e_5['surface'] = pygame.transform.scale(enemy_3_2, (36, 24))
+
         if counter_3/40 == int(counter_3/40):
             for e_1 in enemies_1:
-                e_1['surface'] = pygame.transform.scale(enemy_1_1, (33, 24))            
+                e_1['surface'] = pygame.transform.scale(enemy_1_1, (33, 24))
+
+            for e_2 in enemies_2:
+                e_2['surface'] = pygame.transform.scale(enemy_1_1, (33, 24))
+
+            for e_3 in enemies_3:
+                e_3['surface'] = pygame.transform.scale(enemy_2, (24, 24))
+
+            for e_4 in enemies_4:
+                e_4['surface'] = pygame.transform.scale(enemy_3, (36, 24))
+
+            for e_5 in enemies_5:
+                e_5['surface'] = pygame.transform.scale(enemy_3, (36, 24))
 
 
         for e_1 in enemies_1[:]:
@@ -583,6 +621,9 @@ while True:
                     movement_right = True
                     movement_left = False
 
+                if event.key == ord('q'):
+                    exit = True
+
 #-----------------------------------------------------------------------------------------------------------
 
                 if event.key == K_ESCAPE:
@@ -604,6 +645,8 @@ while True:
                         munition_y = window_y -10
                         munition_x = position_x_spaceship + 7
 
+        if exit == True:
+            break
 
         if movement_left == True:
             position_x_spaceship = position_x_spaceship - 2
@@ -626,7 +669,7 @@ while True:
             counter_6 += 1
             if counter_6 == 1:
                 MunitionRect['rect'].move_ip(munition_x, munition_y)
-            if counter_6 != 1:    
+            if counter_6 != 1:  
                 window.blit(munition, (munition_x, munition_y))
                 munition_y = munition_y - 10
                 MunitionRect['rect'].move_ip(0, -10)
@@ -639,3 +682,13 @@ while True:
 #-------------------------------------------------------------------------------------------------------------
         pygame.display.update()
         Reloj.tick(FPS)
+
+    window.fill(windowcolor)
+    pygame.display.update()
+
+    Draw_Text('You finish the development version,', font, window, window_x/4, (window_y/6)*2)
+    Draw_Text('press a key to return to play :)', font, window, window_x/4, (window_y/6)*3)
+    pygame.display.update()
+    waitForPlayerToPressKey()
+
+    window.fill(windowcolor)
