@@ -1,8 +1,12 @@
-import pygame, sys
+import pygame, sys, time
 from pygame.locals import *
 
 pygame.init()
-DISPLAYSURF = pygame.display.set_mode((400, 300),0 ,32)
+
+window_x = 1000
+window_y = 700
+
+window = pygame.display.set_mode((window_x, window_y),0 ,32)
 pygame.display.set_caption('test window')
 
 Backgroundcolor = (0, 0, 0)
@@ -10,6 +14,20 @@ Backgroundcolor = (0, 0, 0)
 DESTROY = False
 
 counter = 0
+counter_2 = 0
+counter_3 = 0
+
+number_barrier = 0
+
+movement_left = False
+movement_right = False
+
+position_x_ship = window_x / 2
+position_y_ship = window_y - 40
+
+shoot_on = False
+shoot_x = position_x_ship + 6
+shoot_y = position_y_ship + 3
 
 Clock = pygame.time.Clock()
 
@@ -22,69 +40,125 @@ barrier_corner_left_destroyed = pygame.image.load('Barrier_corner_left_destroyed
 barrier_corner_right = pygame.image.load('Barrier_corner_right.png')
 barrier_corner_right_destroyed = pygame.image.load('Barrier_corner_right_destroyed.png')
 
+ship = pygame.image.load('spaceship.png')
+
+shoot = pygame.image.load('munition.png')
+
+def shootHasHitBarrier1(shootRect, b_1):
+	if shootRect['rect'].colliderect(b_1['rect']):
+		return True
+	else:
+		return False
+
+def Print_barrier_1():
+	for b_1 in barrier_1:
+		window.blit(b_1['surface'], b_1['rect'])
+
 while True: # main game loop
-	DISPLAYSURF.fill(Backgroundcolor)
-
-	counter += 1
-
-	print(counter)
-
-	if counter/10 == int(counter/10):
-		DESTROY = True
-
-	if counter/20 == int(counter/20):
-		DESTROY = False
+	barrier_1 = []
 
 
-	if DESTROY == False:
-		DISPLAYSURF.blit(barrier_corner_left, (29 ,30))
-		DISPLAYSURF.blit(barrier_normal, (49, 30))
-		DISPLAYSURF.blit(barrier_normal, (69, 30))
-		DISPLAYSURF.blit(barrier_normal, (89, 30))
-		DISPLAYSURF.blit(barrier_normal, (109, 30))
-		DISPLAYSURF.blit(barrier_corner_right, (129, 30))
 
-		DISPLAYSURF.blit(barrier_normal, (29 ,50))
-		DISPLAYSURF.blit(barrier_normal, (49, 50))
-		DISPLAYSURF.blit(barrier_normal, (69, 50))
-		DISPLAYSURF.blit(barrier_normal, (89, 50))
-		DISPLAYSURF.blit(barrier_normal, (109 ,50))
-		DISPLAYSURF.blit(barrier_normal, (129, 50))	
+	for x in range(1, 19):
+		new_part_barrier_1 = {'rect':pygame.Rect(0, 0, 20,20),
+							  'speed':0,
+							  'surface':pygame.transform.scale(barrier_normal, (20, 20)),
+			}
+		barrier_1.append(new_part_barrier_1)
 
-		DISPLAYSURF.blit(barrier_normal, (29 ,70))
-		DISPLAYSURF.blit(barrier_normal, (49, 70))
-		DISPLAYSURF.blit(barrier_normal, (109 ,70))
-		DISPLAYSURF.blit(barrier_normal, (129, 70))	
+	shootRect = {'rect': pygame.Rect(100, 0, 3, 9),
+				'speed': 200,
+				'surface': pygame.transform.scale(shoot, (3, 9)),
+				}
 
-		DISPLAYSURF.blit(barrier_normal, (29 ,90))
-		DISPLAYSURF.blit(barrier_normal, (49, 90))
-		DISPLAYSURF.blit(barrier_normal, (109 ,90))
-		DISPLAYSURF.blit(barrier_normal, (129, 90))
 
-	if DESTROY == True:
-		DISPLAYSURF.blit(barrier_corner_left_destroyed, (29 ,30))
-		DISPLAYSURF.blit(barrier_normal_destroyed, (49, 30))
-		DISPLAYSURF.blit(barrier_normal_destroyed, (69, 30))
-		DISPLAYSURF.blit(barrier_normal_destroyed, (89, 30))
-		DISPLAYSURF.blit(barrier_normal_destroyed, (109, 30))
-		DISPLAYSURF.blit(barrier_corner_right_destroyed, (129, 30))
+	while True:
+		counter += 1
+		window.fill(Backgroundcolor)
+		
+		for event in pygame.event.get():
+			if event.type == KEYDOWN:
+				if event.key == ord('a') or event.key == K_LEFT:
+					movement_left = True
+					movement_right = False
 
-		DISPLAYSURF.blit(barrier_normal_destroyed, (29 ,50))
-		DISPLAYSURF.blit(barrier_normal_destroyed, (49, 50))
-		DISPLAYSURF.blit(barrier_normal_destroyed, (69, 50))
-		DISPLAYSURF.blit(barrier_normal_destroyed, (89, 50))
-		DISPLAYSURF.blit(barrier_normal_destroyed, (109 ,50))
-		DISPLAYSURF.blit(barrier_normal_destroyed, (129, 50))	
+				elif event.key == ord('d') or event.key == K_RIGHT:
+					movement_right = True
+					movement_left = False
 
-		DISPLAYSURF.blit(barrier_normal_destroyed, (29 ,70))
-		DISPLAYSURF.blit(barrier_normal_destroyed, (49, 70))
-		DISPLAYSURF.blit(barrier_normal_destroyed, (109 ,70))
-		DISPLAYSURF.blit(barrier_normal_destroyed, (129, 70))	
+				if shoot_on == False:
 
-		DISPLAYSURF.blit(barrier_normal_destroyed, (29 ,90))
-		DISPLAYSURF.blit(barrier_normal_destroyed, (49, 90))
-		DISPLAYSURF.blit(barrier_normal_destroyed, (109 ,90))
-		DISPLAYSURF.blit(barrier_normal_destroyed, (129, 90))
+					if event.key == K_SPACE:
+						window.blit(shoot, (shoot_x, shoot_y))
+						shoot_on = True
+						shoot_y = window_y -10
+						shoot_x = position_x_ship + 7
 
-	pygame.display.update()
-	Clock.tick(20)
+
+				if event.key == K_ESCAPE:
+					terminate()
+
+					
+				if event.type == KEYUP:
+					if event.key == ord('a') or event.key == K_LEFT:
+						movement_left = False
+
+					elif event.key == ord ('d') or event.key == K_RIGHT:
+						movement_right = False
+
+				if movement_left == True:
+					position_x_ship = position_x_ship - 2
+
+				if movement_right == True:
+					position_x_ship = position_x_ship + 2
+
+				if position_x_ship == 0:
+					position_x_ship = position_x_ship + 2
+
+				if position_x_ship == window_x:
+					position_x_ship = position_x_ship - 2
+
+		if shoot_on  == True:
+			counter_3 += 1
+			if counter_3 == 1:
+				shootRect['rect'].move_ip(shoot_x, shoot_y)
+			if counter_3 != 1:  
+				window.blit(shoot, (shoot_x, shoot_y))
+				shoot_y = shoot_y - 10
+				shootRect['rect'].move_ip(0, -10)
+
+			if shoot_y == 0:
+				shoot_on = False
+
+
+		window.blit(ship, (position_x_ship, position_y_ship))	
+
+		if counter == 1:
+			print(barrier_1)
+			for b_1 in barrier_1:
+				counter_2 += 1
+				x_barrier = counter_2 * 50
+				print(x_barrier)
+				b_1['rect'].move_ip(x_barrier, 600)
+
+		if counter == 1:
+			print(barrier_1)
+			print()
+			print()
+
+		Print_barrier_1()
+
+		number_barrier = 0
+
+		for b_1 in barrier_1:
+#			print(b_1)
+			number_barrier += 1
+			if shootHasHitBarrier1(shootRect, b_1):
+				print('removed #', number_barrier)
+				barrier_1.remove(b_1)
+				shoot_on = False
+				pygame.display.update()
+				exit = True
+
+		pygame.display.update()
+		Clock.tick(40)
