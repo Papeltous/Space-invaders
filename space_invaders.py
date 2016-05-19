@@ -223,7 +223,7 @@ while True:
     enemies_5 = []
 
     MunitionRect = {'rect': pygame.Rect(100, 0, 3, 9),
-                    'speed': 200,
+                    'speed': 1,
                     'surface': pygame.transform.scale(munition, (3, 9)),
                     }
 
@@ -638,8 +638,8 @@ while True:
             position_x_enemy_1a_row = position_x_enemy_1a_row + 1
     		
         if munition_on == False:
-            munition_x = position_x_spaceship + 7
-            munition_y = position_y_spaceship - 3
+            munition_x = position_x_spaceship + 17
+            munition_y = position_y_spaceship - 10
             MunitionRect['rect'].top = position_y_spaceship
             MunitionRect['rect'].left = position_x_spaceship
 
@@ -673,8 +673,8 @@ while True:
                     if event.key == K_SPACE:
                         window.blit(munition, (munition_x, munition_y))
                         munition_on = True
-                        munition_y = window_y -10
-                        munition_x = position_x_spaceship + 7
+                        munition_y = position_y_spaceship - 10
+                        munition_x = position_x_spaceship + 17
 
         if exit == True:
             break
