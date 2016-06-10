@@ -86,6 +86,10 @@ def Print_barrier_1():
     for b_1 in barrier_1:
         window.blit(b_1['surface'], b_1['rect'])
 
+def Print_barrier_2():
+    for b_2 in barrier_2:
+        window.blit(b_2['surface'], b_2['rect'])
+
 #--------------------------------------------------------------------------------------------
 
 #sprites creation
@@ -192,6 +196,9 @@ right = False
 while True:
 
     barrier_1 = []
+    barrier_2 = []
+    barrier_3 = []
+    barrier_4 = []
 
     exit = False
 
@@ -286,17 +293,83 @@ while True:
 
         barrier_1.append(new_part_barrier_1)
 
+    for x in range(1, 19):
+        new_part_barrier_1 = {'rect':pygame.Rect(100, 0, 20,20),
+                              'speed':0,
+                              'surface':pygame.transform.scale(barrier_normal, (20, 20)),
+            }
+
+        barrier_2.append(new_part_barrier_1)
+
+    for x in range(1, 19):
+        new_part_barrier_1 = {'rect':pygame.Rect(100, 0, 20,20),
+                              'speed':0,
+                              'surface':pygame.transform.scale(barrier_normal, (20, 20)),
+            }
+
+        barrier_3.append(new_part_barrier_1)
+
+    for x in range(1, 19):
+        new_part_barrier_1 = {'rect':pygame.Rect(100, 0, 20,20),
+                              'speed':0,
+                              'surface':pygame.transform.scale(barrier_normal, (20, 20)),
+            }
+
+        barrier_4.append(new_part_barrier_1)
+
     corner_1 = {'rect':pygame.Rect(100,0, 20, 20),
                 'speed':0,
                 'surface':pygame.transform.scale(barrier_corner_left, (20,20)),
                 }
     barrier_1.append(corner_1)
 
+    corner_1 = {'rect':pygame.Rect(100,0, 20, 20),
+                'speed':0,
+                'surface':pygame.transform.scale(barrier_corner_left, (20,20)),
+                }
+
+    barrier_2.append(corner_1)
+
+    corner_1 = {'rect':pygame.Rect(100,0, 20, 20),
+                'speed':0,
+                'surface':pygame.transform.scale(barrier_corner_left, (20,20)),
+                }
+
+    barrier_3.append(corner_1)
+
+    corner_1 = {'rect':pygame.Rect(100,0, 20, 20),
+                'speed':0,
+                'surface':pygame.transform.scale(barrier_corner_left, (20,20)),
+                }
+
+    barrier_4.append(corner_1)
+
     corner_2 = {'rect':pygame.Rect(100,0, 20, 20),
                 'speed':0,
                 'surface':pygame.transform.scale(barrier_corner_right, (20,20)),
                 }
     barrier_1.append(corner_2)
+
+    corner_2 = {'rect':pygame.Rect(100,0, 20, 20),
+                'speed':0,
+                'surface':pygame.transform.scale(barrier_corner_right, (20,20)),
+                }
+
+    barrier_2.append(corner_2)
+
+    corner_2 = {'rect':pygame.Rect(100,0, 20, 20),
+                'speed':0,
+                'surface':pygame.transform.scale(barrier_corner_right, (20,20)),
+                }
+
+    barrier_3.append(corner_2)
+
+    corner_2 = {'rect':pygame.Rect(100,0, 20, 20),
+                'speed':0,
+                'surface':pygame.transform.scale(barrier_corner_right, (20,20)),
+                }
+
+    barrier_4.append(corner_2)
 
     counter_3 = 0
 
@@ -709,56 +782,59 @@ while True:
                 counter_16 += 1
                 if counter_16 < 5 and counter_16 > 0:
                     counter_15 += 1
-                    b_1['rect'] = (400 + (counter_15 * 20),450, 20, 20)
+                    b_1['rect'] = (500 + (counter_15 * 20),450, 20, 20)
 
                 if counter_16 == 4:
                     counter_15 = 0
 
                 if counter_16 < 11 and counter_16 > 4:
                     counter_15 += 1
-                    b_1['rect'] = (380 + (counter_15 * 20),470, 20, 20)
+                    b_1['rect'] = (480 + (counter_15 * 20),470, 20, 20)
 
                 if counter_16 == 10:
                     counter_15 = 0
 
                 if counter_16 < 13 and counter_16 > 10:
                     counter_15 += 1
-                    b_1['rect'] =(380 + (counter_15 * 20),490, 20, 20)
+                    b_1['rect'] =(480 + (counter_15 * 20),490, 20, 20)
 
                 if counter_16 == 12:
                     counter_15 = 0
 
                 if counter_16 < 15 and counter_16 > 12:
                     counter_15 += 1
-                    b_1['rect'] = (460 + (counter_15 * 20),490, 20, 20)
+                    b_1['rect'] = (560 + (counter_15 * 20),490, 20, 20)
 
                 if counter_16 == 14:
                     counter_15 = 0
 
                 if counter_16 < 17 and counter_16 > 14:
                     counter_15 += 1
-                    b_1['rect'] = (380 + (counter_15 * 20),510, 20, 20)
+                    b_1['rect'] = (480 + (counter_15 * 20),510, 20, 20)
 
                 if counter_16 == 16:
                     counter_15 = 0
 
                 if counter_16 < 19 and counter_16 > 16:
                     counter_15 += 1
-                    b_1['rect'] = (460 + (counter_15 * 20),510, 20, 20)
+                    b_1['rect'] = (560 + (counter_15 * 20),510, 20, 20)
 
                 if counter_16 == 18:
                     counter_15 = 0
 
                 if counter_16 < 20 and counter_16 > 18:
                     counter_15 += 1
-                    b_1['rect'] = (380 + (counter_15 * 20), 450, 20, 20)
+                    b_1['rect'] = (480 + (counter_15 * 20), 450, 20, 20)
 
                 if counter_16 == 19:
                     counter_15 = 0
 
                 if counter_16 < 21 and counter_16 > 19:
                     counter_15 += 1
-                    b_1['rect'] = (480 + (counter_15 * 20),450,20,20)
+                    b_1['rect'] = (580 + (counter_15 * 20),450,20,20)
+
+        counter_16 = 0
+        counter_15 = 0
 
         Print_barrier_1()
 
@@ -771,6 +847,75 @@ while True:
                 print(counter_3)
                 print(b_1)
                 barrier_1.remove(b_1)
+                munition_on = False
+
+        if counter_3 == 1:
+            for b_2 in barrier_2:
+                counter_16 += 1
+                if counter_16 < 5 and counter_16 > 0:
+                    counter_15 += 1
+                    b_2['rect'] = (280 + (counter_15 * 20),450, 20, 20)
+
+                if counter_16 == 4:
+                    counter_15 = 0
+
+                if counter_16 < 11 and counter_16 > 4:
+                    counter_15 += 1
+                    b_2['rect'] = (260 + (counter_15 * 20),470, 20, 20)
+
+                if counter_16 == 10:
+                    counter_15 = 0
+
+                if counter_16 < 13 and counter_16 > 10:
+                    counter_15 += 1
+                    b_2['rect'] =(260 + (counter_15 * 20),490, 20, 20)
+
+                if counter_16 == 12:
+                    counter_15 = 0
+
+                if counter_16 < 15 and counter_16 > 12:
+                    counter_15 += 1
+                    b_2['rect'] = (340 + (counter_15 * 20),490, 20, 20)
+
+                if counter_16 == 14:
+                    counter_15 = 0
+
+                if counter_16 < 17 and counter_16 > 14:
+                    counter_15 += 1
+                    b_2['rect'] = (340 + (counter_15 * 20),510, 20, 20)
+
+                if counter_16 == 16:
+                    counter_15 = 0
+
+                if counter_16 < 19 and counter_16 > 16:
+                    counter_15 += 1
+                    b_2['rect'] = (260 + (counter_15 * 20),510, 20, 20)
+
+                if counter_16 == 18:
+                    counter_15 = 0
+
+                if counter_16 < 20 and counter_16 > 18:
+                    counter_15 += 1
+                    b_2['rect'] = (260 + (counter_15 * 20), 450, 20, 20)
+
+                if counter_16 == 19:
+                    counter_15 = 0
+
+                if counter_16 < 21 and counter_16 > 19:
+                    counter_15 += 1
+                    b_2['rect'] = (360 + (counter_15 * 20),450,20,20)
+
+        Print_barrier_2()
+
+        number_barrier = 0
+
+        for b_2 in barrier_2:
+            number_barrier += 1
+            if MunitionHasHitBarrier1(MunitionRect, b_2):
+                print('removed #', number_barrier, 'with rect:', b_2['rect'])
+                print(counter_3)
+                print(b_2)
+                barrier_2.remove(b_2)
                 munition_on = False
 
         pygame.display.update()
